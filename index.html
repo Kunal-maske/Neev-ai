@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Neev AI – AI WhatsApp Employee for Indian Businesses</title>
+  <!-- Google Fonts: Modern sans-serif -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0A0A0F;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      color: #ffffff;
+    }
+
+    /* Custom styles */
+    .glass-card {
+      background: rgba(20, 20, 35, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 2rem;
+    }
+
+    .glass-panel {
+      background: rgba(15, 15, 25, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .neon-border {
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.4), 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .hover-glow:hover {
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+      transition: all 0.3s ease;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #13131f;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2563eb;
+      border-radius: 10px;
+    }
+
+    /* WhatsApp chat bubbles */
+    .whatsapp-bubble-user {
+      background: linear-gradient(135deg, #1e3a5f, #0f2b4f);
+      border-radius: 18px 18px 4px 18px;
+    }
+
+    .whatsapp-bubble-bot {
+      background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
+      border-radius: 18px 18px 18px 4px;
+      border-left: 2px solid #38bdf8;
+    }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.1); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-pulse-slow {
+      animation: pulse-slow 4s ease-in-out infinite;
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .fade-in-left {
+      animation: fadeInLeft 0.8s ease-out forwards;
+    }
+
+    .fade-in-right {
+      animation: fadeInRight 0.8s ease-out forwards;
+    }
+
+    .hover-scale {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-scale:hover {
+      transform: translateY(-6px);
+    }
+
+    /* Particles canvas */
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Smooth section transitions */
+    section {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Ensure all text is visible */
+    p, h1, h2, h3, h4, span, div {
+      color: #ffffff;
+    }
+
+    .text-gray-300 {
+      color: #d1d5db !important;
+    }
+
+    .text-gray-400 {
+      color: #9ca3af !important;
+    }
+
+    button, .btn {
+      color: #ffffff;
+    }
+
+    .bg-white\/5 {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    input, textarea {
+      color: #ffffff;
+    }
+
+    input::placeholder {
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particles Background -->
+  <div id="particles-js"></div>
+
+  <!-- Floating Glowing Blobs -->
+  <div class="fixed top-40 -left-20 w-96 h-96 bg-purple-600/20 rounded-full blur-[100px] z-0 pointer-events-none animate-pulse-slow"></div>
+  <div class="fixed bottom-20 right-0 w-80 h-80 bg-blue-500/20 rounded-full blur-[90px] z-0 pointer-events-none animate-pulse-slow" style="animation-delay: 2s;"></div>
+
+  <!-- Navigation -->
+  <nav class="relative z-20 flex justify-between items-center py-6 px-6 md:px-12 max-w-7xl mx-auto">
+    <div class="flex items-center gap-2">
+      <div class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">Neev AI</div>
+      <span class="text-xs border border-cyan-400/40 rounded-full px-3 py-0.5 bg-white/10 text-cyan-300">⚡ AI Employee</span>
+    </div>
+    <div class="hidden md:flex gap-8 text-gray-300 text-sm font-medium">
+      <a href="#features" class="hover:text-cyan-400 transition-colors">Features</a>
+      <a href="#how-it-works" class="hover:text-cyan-400 transition-colors">How it works</a>
+      <a href="#pricing" class="hover:text-cyan-400 transition-colors">Pricing</a>
+    </div>
+    <button onclick="document.getElementById('demo-form').scrollIntoView({behavior: 'smooth'})" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold px-5 py-2 rounded-full text-sm shadow-lg shadow-blue-500/20 hover:scale-105 transition-transform">
+      Book Demo
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative z-10 pt-12 pb-20 px-6 md:px-12 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <div class="fade-in-left">
+      <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
+        <span class="bg-gradient-to-br from-white via-white to-cyan-200 bg-clip-text text-transparent">Your AI WhatsApp</span>
+        <br />
+        <span class="text-cyan-400">Employee</span>
+      </h1>
+      <p class="text-gray-300 text-lg mt-6 leading-relaxed">Neev AI helps businesses automate customer replies, lead follow-ups, appointment booking, and support on WhatsApp using AI agents.</p>
+      <div class="flex flex-wrap gap-5 mt-8">
+        <button onclick="document.getElementById('demo-form').scrollIntoView({behavior: 'smooth'})" class="bg-cyan-500 text-white font-bold px-8 py-3 rounded-full shadow-xl shadow-cyan-500/40 text-lg hover:scale-105 transition-transform">
+          Book Free Demo →
+        </button>
+        <button class="border border-white/30 bg-white/10 backdrop-blur-sm px-7 py-3 rounded-full font-medium text-white hover:bg-white/20 transition-all">
+          See Live Demo
+        </button>
+      </div>
+    </div>
+    
+    <div class="fade-in-right">
+      <div class="glass-card p-3 rounded-3xl shadow-2xl">
+        <div class="bg-black/40 rounded-2xl p-2">
+          <div class="flex items-center gap-2 bg-[#0f1219] rounded-t-xl p-3 border-b border-white/10">
+            <i class="fab fa-whatsapp text-green-500 text-xl"></i>
+            <span class="text-sm font-semibold text-white">WhatsApp Business • Neev AI Assistant</span>
+          </div>
+          <div class="h-80 overflow-y-auto p-3 space-y-3 bg-[#0A0C12] rounded-b-xl">
+            <div class="whatsapp-bubble-bot p-3 max-w-[80%] text-sm text-white">
+              <span class="text-cyan-400 font-bold">🤖 Neev AI:</span> Hello! I'm your AI employee. Need help with appointments, pricing, or support?
+            </div>
+            <div class="whatsapp-bubble-user p-3 max-w-[80%] ml-auto text-sm text-white">
+              <span class="font-bold">👤 You:</span> Yes! I'd like to book a consultation for my clinic.
+            </div>
+            <div class="whatsapp-bubble-bot p-3 max-w-[80%] text-sm text-white">
+              <span class="text-cyan-400 font-bold">🤖 Neev AI:</span> Wonderful! Share your preferred date & time. I'll handle scheduling instantly.
+            </div>
+            <div class="whatsapp-bubble-user p-3 max-w-[80%] ml-auto text-sm text-white">
+              <span class="font-bold">👤 You:</span> Monday 10 AM works.
+            </div>
+            <div class="whatsapp-bubble-bot p-3 max-w-[80%] text-sm text-white">
+              <span class="text-cyan-400 font-bold">🤖 Neev AI:</span> ✅ Confirmed! Appointment scheduled. We'll send a reminder 1 hour before. Thank you!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="relative z-10 py-20 px-6 max-w-7xl mx-auto">
+    <div class="text-center fade-in-up">
+      <h2 class="text-4xl font-bold text-white">Intelligent <span class="text-cyan-400">Automation</span> Suite</h2>
+      <p class="text-gray-400 mt-3 max-w-2xl mx-auto">Everything you need to run customer conversations on autopilot</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
+      <div class="glass-card p-6 rounded-2xl hover-scale hover:border-cyan-400/60 transition-all">
+        <i class="fas fa-bolt text-3xl text-cyan-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white">Instant Replies</h3>
+        <p class="text-gray-300 text-sm mt-2">Respond to customers within seconds, 24/7</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl hover-scale hover:border-cyan-400/60 transition-all">
+        <i class="fas fa-brain text-3xl text-cyan-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white">AI Lead Qualification</h3>
+        <p class="text-gray-300 text-sm mt-2">Automatically qualify hot leads before they reach you</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl hover-scale hover:border-cyan-400/60 transition-all">
+        <i class="fas fa-calendar-check text-3xl text-cyan-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white">Appointment Booking</h3>
+        <p class="text-gray-300 text-sm mt-2">End-to-end smart scheduling without human intervention</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl hover-scale hover:border-cyan-400/60 transition-all">
+        <i class="fas fa-language text-3xl text-cyan-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white">Multilingual Support</h3>
+        <p class="text-gray-300 text-sm mt-2">English, Hindi, Tamil, Kannada & more</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl hover-scale hover:border-cyan-400/60 transition-all">
+        <i class="fas fa-headset text-3xl text-cyan-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white">24/7 Customer Support</h3>
+        <p class="text-gray-300 text-sm mt-2">Never miss a query after business hours</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl hover-scale hover:border-cyan-400/60 transition-all">
+        <i class="fas fa-envelope-open-text text-3xl text-cyan-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-white">Automated Follow-Ups</h3>
+        <p class="text-gray-300 text-sm mt-2">Smart nurture sequences that convert</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="how-it-works" class="relative z-10 py-16 px-6 max-w-7xl mx-auto">
+    <h2 class="text-4xl font-bold text-center text-white fade-in-up">⚡ How It Works</h2>
+    <div class="grid md:grid-cols-3 gap-8 mt-16">
+      <div class="glass-panel rounded-2xl p-8 text-center border border-white/10 hover-scale">
+        <div class="w-12 h-12 rounded-full bg-cyan-400/20 border border-cyan-400 text-cyan-400 text-xl font-bold flex items-center justify-center mx-auto mb-5">1</div>
+        <p class="text-white text-lg font-semibold">Customer messages your business</p>
+        <p class="text-gray-400 text-sm mt-2">On WhatsApp, website, or Instagram</p>
+      </div>
+      <div class="glass-panel rounded-2xl p-8 text-center border border-white/10 hover-scale">
+        <div class="w-12 h-12 rounded-full bg-cyan-400/20 border border-cyan-400 text-cyan-400 text-xl font-bold flex items-center justify-center mx-auto mb-5">2</div>
+        <p class="text-white text-lg font-semibold">AI agent handles conversation</p>
+        <p class="text-gray-400 text-sm mt-2">Understands intent & responds naturally</p>
+      </div>
+      <div class="glass-panel rounded-2xl p-8 text-center border border-white/10 hover-scale">
+        <div class="w-12 h-12 rounded-full bg-cyan-400/20 border border-cyan-400 text-cyan-400 text-xl font-bold flex items-center justify-center mx-auto mb-5">3</div>
+        <p class="text-white text-lg font-semibold">You get qualified leads/bookings</p>
+        <p class="text-gray-400 text-sm mt-2">Automatically synced to your CRM</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industry Use Cases -->
+  <section class="relative z-10 py-20 px-6 max-w-7xl mx-auto">
+    <div class="text-center fade-in-up">
+      <h2 class="text-4xl font-bold text-white">Trusted by <span class="text-cyan-400">Indian Businesses</span></h2>
+      <p class="text-gray-400 mt-2">AI agents tailored for your industry</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-5 mt-12">
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/15 text-center hover-scale">
+        <i class="fas fa-tooth text-3xl text-cyan-400 mb-3"></i>
+        <h4 class="font-bold text-lg text-white">Dental Clinics</h4>
+        <p class="text-gray-300 text-xs mt-2">Automate appointment booking, reminders & insurance inquiries</p>
+      </div>
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/15 text-center hover-scale">
+        <i class="fas fa-dumbbell text-3xl text-cyan-400 mb-3"></i>
+        <h4 class="font-bold text-lg text-white">Gyms</h4>
+        <p class="text-gray-300 text-xs mt-2">Handle membership queries, class schedules & lead follow-ups</p>
+      </div>
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/15 text-center hover-scale">
+        <i class="fas fa-cut text-3xl text-cyan-400 mb-3"></i>
+        <h4 class="font-bold text-lg text-white">Salons</h4>
+        <p class="text-gray-300 text-xs mt-2">AI books styling appointments & suggests services</p>
+      </div>
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/15 text-center hover-scale">
+        <i class="fas fa-chalkboard-user text-3xl text-cyan-400 mb-3"></i>
+        <h4 class="font-bold text-lg text-white">Coaching Institutes</h4>
+        <p class="text-gray-300 text-xs mt-2">Instant replies about courses, fees, demo scheduling</p>
+      </div>
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/15 text-center hover-scale">
+        <i class="fas fa-building text-3xl text-cyan-400 mb-3"></i>
+        <h4 class="font-bold text-lg text-white">Realtors</h4>
+        <p class="text-gray-300 text-xs mt-2">Qualify property leads & schedule site visits</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Demo Chat -->
+  <section class="relative z-10 py-16 px-6 max-w-5xl mx-auto">
+    <div class="glass-card rounded-3xl overflow-hidden p-2 md:p-6">
+      <h2 class="text-2xl font-bold text-center text-white mb-4">✨ Live AI Demo — WhatsApp Booking</h2>
+      <div class="bg-[#0E111B] rounded-2xl p-4 max-w-md mx-auto shadow-2xl border border-blue-500/30">
+        <div class="flex items-center gap-2 border-b border-white/10 pb-2 mb-3">
+          <i class="fab fa-whatsapp text-green-400 text-xl"></i>
+          <span class="font-bold text-white">Neev AI Assistant</span>
+          <span class="text-xs text-green-400 ml-auto">● Online</span>
+        </div>
+        <div id="chat-messages" class="h-64 overflow-y-auto space-y-2 mb-3 pr-1">
+          <div class="flex justify-start">
+            <div class="max-w-[85%] p-2.5 rounded-xl text-sm bg-gray-800 text-white rounded-bl-none">
+              Hi! I'm Neev AI assistant. I can help you book appointments. When would you prefer? We have slots tomorrow at 11 AM or 4 PM.
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" id="chat-input" placeholder="Type '11 AM' or '4 PM'..." class="flex-1 bg-black/60 border border-white/20 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-cyan-400 text-white placeholder-gray-400">
+          <button onclick="sendChatMessage()" class="bg-cyan-500 text-white px-4 rounded-full font-semibold hover:bg-cyan-400 transition">Send</button>
+        </div>
+        <p class="text-[10px] text-gray-500 mt-2 text-center">*Try booking with "11 AM" to see AI confirm instantly</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="relative z-10 py-16 px-6 max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/15 hover-scale">
+      <div class="text-4xl font-black text-cyan-400">3x</div>
+      <div class="font-bold text-lg text-white mt-2">Faster Response</div>
+      <div class="text-gray-300 text-sm">Under 5 seconds reply time</div>
+    </div>
+    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/15 hover-scale">
+      <div class="text-4xl font-black text-cyan-400">68%</div>
+      <div class="font-bold text-lg text-white mt-2">Higher Conversion</div>
+      <div class="text-gray-300 text-sm">AI pre-qualifies leads</div>
+    </div>
+    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/15 hover-scale">
+      <div class="text-4xl font-black text-cyan-400">20+</div>
+      <div class="font-bold text-lg text-white mt-2">Hours Saved</div>
+      <div class="text-gray-300 text-sm">For your support team weekly</div>
+    </div>
+    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/15 hover-scale">
+      <div class="text-4xl font-black text-cyan-400">24/7</div>
+      <div class="font-bold text-lg text-white mt-2">Always Available</div>
+      <div class="text-gray-300 text-sm">No missed opportunities</div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="relative z-10 py-20 px-6 max-w-7xl mx-auto">
+    <h2 class="text-4xl font-bold text-center text-white fade-in-up">Loved by <span class="text-cyan-400">Business Owners</span></h2>
+    <div class="grid md:grid-cols-3 gap-8 mt-12">
+      <div class="glass-card p-6 rounded-2xl hover-scale">
+        <div class="flex items-center gap-3">
+          <div class="text-3xl">👩‍⚕️</div>
+          <div><p class="font-bold text-white">Dr. Priya Mehta</p><p class="text-xs text-cyan-400">Smile Dental Clinic, Mumbai</p></div>
+        </div>
+        <p class="mt-4 text-gray-300 text-sm italic">"Neev AI handles our appointments & follow-ups seamlessly. Patients love the instant replies! Booking rate increased by 55%."</p>
+        <div class="mt-3 flex text-yellow-400 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+      </div>
+      <div class="glass-card p-6 rounded-2xl hover-scale">
+        <div class="flex items-center gap-3">
+          <div class="text-3xl">💪</div>
+          <div><p class="font-bold text-white">Rahul Sharma</p><p class="text-xs text-cyan-400">FitZone Gym, Bangalore</p></div>
+        </div>
+        <p class="mt-4 text-gray-300 text-sm italic">"We used to lose leads after hours. Now AI converts membership queries even at 2 AM. Absolute game-changer."</p>
+        <div class="mt-3 flex text-yellow-400 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+      </div>
+      <div class="glass-card p-6 rounded-2xl hover-scale">
+        <div class="flex items-center gap-3">
+          <div class="text-3xl">✂️</div>
+          <div><p class="font-bold text-white">Anjali Nair</p><p class="text-xs text-cyan-400">The Style Lounge, Kochi</p></div>
+        </div>
+        <p class="mt-4 text-gray-300 text-sm italic">"Multilingual support helped us serve clients better. Automated reminders reduced no-shows by 70%! Highly recommend."</p>
+        <div class="mt-3 flex text-yellow-400 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+    <!-- Pricing Section (Updated) -->
+  <section id="pricing" class="relative z-10 py-20 px-6 max-w-7xl mx-auto">
+    <h2 class="text-4xl font-bold text-center text-white fade-in-up">Simple, transparent <span class="text-cyan-400">pricing</span></h2>
+    <p class="text-center text-gray-400 mt-4 max-w-2xl mx-auto">One-time setup + affordable monthly maintenance. No hidden fees.</p>
+    
+    
+
+    <!-- Total Summary Card -->
+    <div class="max-w-2xl mx-auto mt-10 text-center">
+      <div class="glass-card p-6 rounded-2xl">
+        <p class="text-gray-300 text-sm mb-2">Complete Package (Setup + First Month)</p>
+        <div class="flex items-center justify-center gap-4 flex-wrap">
+          <span class="text-2xl font-semibold text-white">₹8,999 <span class="text-sm text-gray-400">one-time</span></span>
+          <span class="text-2xl text-cyan-400">+</span>
+          <span class="text-2xl font-semibold text-white">₹4,999 <span class="text-sm text-gray-400">/month</span></span>
+          <span class="text-2xl text-cyan-400">=</span>
+          <span class="text-3xl font-black text-cyan-400">₹13,998</span>
+          <span class="text-sm text-gray-300">first month incl. setup</span>
+        </div>
+        <button onclick="alert('🎉 Demo request received! Our team will contact you within 2 hours.')" class="mt-6 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold px-8 py-3 rounded-full shadow-lg shadow-cyan-500/30 hover:scale-105 transition-transform">
+          Get Started →
+        </button>
+        <p class="text-gray-500 text-xs mt-3">Cancel anytime. No long-term contracts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="demo-form" class="relative z-10 py-24 px-6 text-center">
+    <div class="max-w-3xl mx-auto glass-card p-12 rounded-3xl">
+      <h2 class="text-4xl md:text-5xl font-bold text-white">Stop Losing Customers <br/> After <span class="text-cyan-400">Business Hours</span></h2>
+      <button onclick="alert('🎉 Demo request received! Our team will contact you within 2 hours.')" class="mt-8 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold px-10 py-4 rounded-full text-xl shadow-2xl shadow-blue-500/50 hover:scale-105 transition-transform">
+        Book Your Free AI Demo →
+      </button>
+      <p class="mt-4 text-gray-300">No commitment. See how AI converts your leads automatically.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-white/10 py-12 px-6 max-w-7xl mx-auto">
+    <div class="flex flex-wrap justify-between gap-8">
+      <div>
+        <div class="text-2xl font-bold text-cyan-400">Neev AI</div>
+        <p class="text-gray-400 text-sm mt-1">AI WhatsApp Employee for Indian SMEs</p>
+      </div>
+      <div class="flex gap-8 text-gray-300 text-sm">
+        <a href="#features" class="hover:text-cyan-400 transition">Features</a>
+        <a href="#pricing" class="hover:text-cyan-400 transition">Pricing</a>
+        <a href="#" class="hover:text-cyan-400 transition">Contact</a>
+        <a href="#" class="hover:text-cyan-400 transition">Privacy</a>
+      </div>
+      <div class="flex gap-5 text-xl text-gray-300">
+        <i class="fab fa-twitter hover:text-cyan-400 cursor-pointer transition"></i>
+        <i class="fab fa-linkedin hover:text-cyan-400 cursor-pointer transition"></i>
+        <i class="fab fa-whatsapp text-green-400 cursor-pointer"></i>
+        <i class="far fa-envelope hover:text-cyan-400 cursor-pointer transition"></i>
+      </div>
+    </div>
+    <div class="text-center text-gray-400 text-xs mt-8">
+      📧 hello@neevai.com | 📞 +91-80-1234-5678 | © 2025 Neev AI — Automate Beyond Limits
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    // Initialize particles
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 60, density: { enable: true, value_area: 800 } },
+        color: { value: "#38bdf8" },
+        shape: { type: "circle" },
+        opacity: { value: 0.2, random: true },
+        size: { value: 2, random: true },
+        line_linked: { enable: true, distance: 150, color: "#3b82f6", opacity: 0.1, width: 1 },
+        move: { enable: true, speed: 1, direction: "none", random: true, straight: false, out_mode: "out" }
+      },
+      interactivity: { 
+        detect_on: "canvas", 
+        events: { 
+          onhover: { enable: true, mode: "repulse" }, 
+          onclick: { enable: false } 
+        } 
+      },
+      retina_detect: true
+    });
+
+    // Chat functionality
+    function sendChatMessage() {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      if (!message) return;
+
+      const chatDiv = document.getElementById('chat-messages');
+      
+      // Add user message
+      const userMsgDiv = document.createElement('div');
+      userMsgDiv.className = 'flex justify-end';
+      userMsgDiv.innerHTML = `<div class="max-w-[85%] p-2.5 rounded-xl text-sm bg-cyan-500/20 text-white rounded-br-none border border-cyan-400/30">${escapeHtml(message)}</div>`;
+      chatDiv.appendChild(userMsgDiv);
+      
+      // Clear input and scroll
+      input.value = '';
+      chatDiv.scrollTop = chatDiv.scrollHeight;
+
+      // Simulate AI response
+      setTimeout(() => {
+        let reply = '';
+        if (message.toLowerCase().includes('11 am') || message.toLowerCase().includes('11am')) {
+          reply = 'Perfect! Appointment confirmed for tomorrow at 11 AM. We\'ve sent a reminder to your WhatsApp. See you! ✅';
+        } else if (message.toLowerCase().includes('4 pm') || message.toLowerCase().includes('4pm')) {
+          reply = 'Got it! Tomorrow 4 PM works. Confirmed! You\'ll receive location & details. Thank you! 🦷';
+        } else {
+          reply = 'Thanks! Just pick 11 AM or 4 PM for tomorrow, and I\'ll instantly confirm your booking. ✅';
+        }
+        
+        const botMsgDiv = document.createElement('div');
+        botMsgDiv.className = 'flex justify-start';
+        botMsgDiv.innerHTML = `<div class="max-w-[85%] p-2.5 rounded-xl text-sm bg-gray-800 text-white rounded-bl-none">${escapeHtml(reply)}</div>`;
+        chatDiv.appendChild(botMsgDiv);
+        chatDiv.scrollTop = chatDiv.scrollHeight;
+      }, 600);
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
+    }
+
+    // Allow Enter key to send
+    document.getElementById('chat-input')?.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') sendChatMessage();
+    });
+
+    // Add intersection observer for fade-in animations
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.glass-card, .glass-panel, .bg-white\\/10, .hover-scale').forEach(el => {
+      if (!el.classList.contains('fade-in-up') && !el.classList.contains('fade-in-left') && !el.classList.contains('fade-in-right')) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        observer.observe(el);
+      }
+    });
+  </script>
+</body>
+</html>
